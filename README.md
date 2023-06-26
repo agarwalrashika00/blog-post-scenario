@@ -19,3 +19,15 @@ user ko follow
 user k article ko follow
 user k blog ko follow
 user k commnets ko follow
+
+### make associtaion to fetch users who follow articles of a user
+
+class Article 
+	has_many :follow, as: :followable
+  has_many :followers, through: :follow
+end
+
+class User
+  has_many :articles, -> {where(type: 'Article')}, class_name: 'Post'
+  has_many :article_followers, through: :articles, source: :followers
+end
